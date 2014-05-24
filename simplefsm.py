@@ -1,5 +1,5 @@
 from abc import ABCMeta, abstractmethod
-from .errors import *
+from errors import *
 
 
 class State(object) :

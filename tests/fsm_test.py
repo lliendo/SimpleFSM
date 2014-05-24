@@ -74,11 +74,6 @@ class TestDummyFSM(TestCase) :
         fsm = DummyFSM()
         fsm.run()
 
-    @raises(FSMNoStartStateError)
-    def test_missing_start_state(self) :
-        fsm = DummyFSM()
-        fsm.run()
-
     @raises(FSMFinalStateError)
     def test_missing_final_states(self) :
         fsm = DummyFSM()
