@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 TEST_DIRS = ["*.tests", "*.tests.*", "tests.*", "tests"]
 
 setup(
-    name = "FSM",
+    name = "SimpleFSM",
     description = "A simple package that allows you model arbitrary automatons.", 
     version = "0.1",
     packages = find_packages(exclude=TEST_DIRS),
