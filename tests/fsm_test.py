@@ -3,34 +3,34 @@ from unittest import TestCase
 from ..simplefsm import *
 
 
-class DummyFSM(SimpleFSM) :
-    def __init__(self) :
+class DummyFSM(SimpleFSM):
+    def __init__(self):
         super(DummyFSM, self).__init__()
         self._symbols = None
         self._pointer = 0
 
-    def reset(self) :
+    def reset(self):
         self._symbols = None
         self._pointer = 0
 
-    def set_symbols(self, symbols) :
+    def set_symbols(self, symbols):
         self._symbols = symbols
 
-    def read_symbol(self, *args, **kwargs) :
-        try :
+    def read_symbol(self, *args, **kwargs):
+        try:
             s = self._symbols[self._pointer]
             self._pointer += 1
-        except IndexError :
+        except IndexError:
             raise FSMEndOfInput
 
         return s
 
 
-class TestDummyFSM(TestCase) :
-    def setUp(self) :
+class TestDummyFSM(TestCase):
+    def setUp(self):
         self._fsm = self._build_fsm()
 
-    def _build_fsm(self) :
+    def _build_fsm(self):
         # States.
         state_a = State('a')
         state_a.start_state = True
@@ -56,26 +56,26 @@ class TestDummyFSM(TestCase) :
 
         return fsm
 
-    def test_input_is_accepted(self) :
+    def test_input_is_accepted(self):
         fsm_test_input = ['a', 'a', 'b', 'b', 'a', 'b', 'a', 'b']
         self._fsm.reset()
         self._fsm.set_symbols(fsm_test_input)
         assert_equal(self._fsm.run(), fsm_test_input)
         
     @raises(FSMRejectedInput)
-    def test_input_is_rejected(self) :
+    def test_input_is_rejected(self):
         fsm_test_input = ['a', 'a', 'b', 'b', 'a', 'c', 'a', 'b']
         self._fsm.reset()
         self._fsm.set_symbols(fsm_test_input)
         self._fsm.run()
 
     @raises(FSMNoStartStateError)
-    def test_missing_start_state(self) :
+    def test_missing_start_state(self):
         fsm = DummyFSM()
         fsm.run()
 
     @raises(FSMFinalStateError)
-    def test_missing_final_states(self) :
+    def test_missing_final_states(self):
         fsm = DummyFSM()
         state_a = State('a')
         state_a.start_state = True
@@ -83,7 +83,7 @@ class TestDummyFSM(TestCase) :
         fsm.run()
 
     @raises(FSMStartStatesError)
-    def test_no_unique_start_state(self) :
+    def test_no_unique_start_state(self):
         fsm = DummyFSM()
         state_a = State('a')
         state_a.start_state = True
@@ -94,13 +94,13 @@ class TestDummyFSM(TestCase) :
         fsm.run()
 
     @raises(FSMDuplicatedState)
-    def test_duplicated_states(self) :
+    def test_duplicated_states(self):
         fsm = DummyFSM()
         fsm.add_state(State('a'))
         fsm.add_state(State('a'))
 
     @raises(FSMDuplicatedTransition)
-    def test_duplicated_transitions(self) :
+    def test_duplicated_transitions(self):
         fsm = DummyFSM()
         transition = Transition(State('a'), State('b'), lambda c: True)
         fsm.add_transition(transition)
