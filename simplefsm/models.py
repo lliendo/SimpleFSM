@@ -187,7 +187,7 @@ class SimpleFSM(object):
         is no more input to be provided an FSMEndOfInput should be raised
         to notify the FSM that no more input is available.
         """
-        raise FSMUnimplementedInput()
+        raise FSMNotImplementedInput()
 
     def post_transit(self):
         """

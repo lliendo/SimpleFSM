@@ -17,7 +17,7 @@ class FSMFinalStateError(FSMError):
         return "Error - No final state/s defined for this FSM."
 
 
-class FSMUnimplementedInput(FSMError):
+class FSMNotImplementedInput(FSMError):
     def __str__(self):
         return "Error - The read_symbol() method must be implemented."
 
