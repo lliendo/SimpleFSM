@@ -71,7 +71,7 @@ create a FSM that accepts arbitrary binary numbers :
 
 .. code-block:: pycon
 
-    from simplefsm import *
+    from simplefsm.models import *
     from random import randint
 
 
