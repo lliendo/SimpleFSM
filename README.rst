@@ -54,6 +54,8 @@ To create a transition you would write :
 
 .. code-block:: pycon
 
+    state_a = State('A', start_state=True, final_state=True)
+    state_b = State('B', final_state=True)
     transition_zero = Transition(State("A"), State("B"), lambda x: str(x) == '0')
 
 The above code builds a transition between state A and state B
@@ -122,3 +124,13 @@ Is important to note that when implementing the read_symbol()
 method and no more input is available you must raise the
 FSMEndOfInput exception to notify the FSM that you've reached
 the end of the input that you're evaluating.
+
+
+Installation
+------------
+
+To install SimpleFSM, run:
+
+.. code-block:: bash
+
+    $ python setup.py install
