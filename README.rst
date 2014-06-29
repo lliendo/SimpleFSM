@@ -122,7 +122,7 @@ create a FSM that accepts arbitrary binary numbers :
 
 Is important to note that when implementing the read_symbol()
 method and no more input is available you must raise the
-FSMEndOfInput exception to notify the FSM that you've reached
+FSMEndOfInput exception to notify SimpleFSM that you've reached
 the end of the input that you're evaluating.
 
 
