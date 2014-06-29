@@ -1,6 +1,9 @@
 from nose.tools import assert_equal, raises
 from unittest import TestCase
-from ..simplefsm import *
+from ..models import State, Transition, SimpleFSM
+from ..exceptions import FSMStartStatesError, FSMNoStartStateError, FSMFinalStateError
+from ..exceptions import FSMRejectedInput, FSMDuplicatedState, FSMDuplicatedTransition
+from ..exceptions import FSMEndOfInput
 
 
 class DummyFSM(SimpleFSM):
