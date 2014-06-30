@@ -24,7 +24,7 @@ State class
 The State class models a particular state of your FSM. To create
 a state you only need to issue :
 
-.. code-block:: pycon
+.. code-block:: python
 
     state_a = State('A')
 
@@ -35,7 +35,7 @@ two states with the same id to the FSM an exception is raised.
 Another two keyword arguments may optionally be set to mark
 a state as a start and/or final state :
 
-.. code-block:: pycon
+.. code-block:: python
 
     state_a = State('A', start_state=True, final_state=True)
     state_b = State('B', final_state=True)
@@ -52,7 +52,7 @@ Transition class
 The Transition class models a transition between two states.
 To create a transition you would write :
 
-.. code-block:: pycon
+.. code-block:: python
 
     state_a = State('A', start_state=True, final_state=True)
     state_b = State('B', final_state=True)
@@ -71,7 +71,7 @@ built all your states, transitions and the custom FSM you are
 ready to go. The following is a full example that shows how to
 create a FSM that accepts arbitrary binary numbers :
 
-.. code-block:: pycon
+.. code-block:: python
 
     from simplefsm.models import *
     from random import randint
