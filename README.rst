@@ -94,7 +94,7 @@ create a FSM that accepts arbitrary binary numbers :
 
 
     def build_fsm():
-        # States
+        # States.
         state_a = State('A', start_state=True)
         state_b = State('B', final_state=True)
 
@@ -119,6 +119,11 @@ create a FSM that accepts arbitrary binary numbers :
 
     if __name__ == '__main__':
         main()
+
+
+In the above example all the transitions are lambdas but you can
+use any defined function as well, the functions should take only
+one argument, the symbol that is being evaluated and return a bool.
 
 Is important to note that when implementing the read_symbol()
 method and no more input is available you must raise the
