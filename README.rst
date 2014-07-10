@@ -73,7 +73,7 @@ create a FSM that accepts arbitrary binary numbers :
 
 .. code-block:: python
 
-    from simplefsm.models import *
+    from simplefsm import State, SimpleFSM, Transition
     from random import randint
 
 
