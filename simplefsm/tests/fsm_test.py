@@ -60,7 +60,7 @@ class TestDummyFSM(TestCase):
         # States.
         state_a = State('a')
         state_a.start_state = True
-        state_a.end_state = True
+        state_a.final_state = False
 
         state_b = State('b')
         state_b.final_state = True
@@ -90,7 +90,8 @@ class TestDummyFSM(TestCase):
         
     @raises(FSMRejectedInput)
     def test_input_is_rejected(self):
-        fsm_test_input = ['a', 'a', 'b', 'b', 'a', 'c', 'a', 'b']
+        # fsm_test_input = ['a', 'a', 'b', 'b', 'a', 'c', 'a', 'b']
+        fsm_test_input = ['a', 'a', 'b', 'b', 'a', 'c', 'a']
         self._fsm.reset()
         self._fsm.set_symbols(fsm_test_input)
         self._fsm.run()
