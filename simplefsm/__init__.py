@@ -77,7 +77,7 @@ class State(object):
         except IndexError:
             raise FSMRejectedInput(symbol)
 
-        fsm.state = transition.to_state
+        fsm.current_state = transition.to_state
         return symbol
 
     def __eq__(self, other):
@@ -159,6 +159,14 @@ class SimpleFSM(object):
     def transitions(self):
         """Returns a list containing all the defined transitions for this FSM."""
         return self._transitions
+
+    @property
+    def current_state(self):
+        return self._current_state
+
+    @current_state.setter
+    def current_state(self, state):
+        self._current_state = state
 
     def add_state(self, state):
         """
@@ -245,12 +253,15 @@ class SimpleFSM(object):
 
         self._set_states()
 
-        while (self._current_state not in self._final_states) and self._remaining_input:
+        while self._remaining_input:
             try:
                 self.pre_transit()
                 self._accepted_symbols.append(self._current_state.transit(self))
                 self.post_transit()
             except FSMEndOfInput:
                 self._remaining_input = False
+
+        if self.current_state not in self._final_states:
+            raise FSMRejectedInput(type='string')
 
         return self._accepted_symbols
