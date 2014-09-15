@@ -44,11 +44,12 @@ class FSMNotImplementedInput(FSMError):
 
 
 class FSMRejectedInput(FSMError):
-    def __init__(self, symbol):
+    def __init__(self, symbol, type="symbol"):
         self._symbol = symbol
+        self._type = type
 
     def __str__(self):
-        return "'{0}' is not a recognized symbol by this FSM.".format(self._symbol)
+        return "'{0}' is not a recognized {1} by this FSM.".format(self._symbol, self._type)
 
 
 class FSMEndOfInput(FSMError):
@@ -69,4 +70,6 @@ class FSMDuplicatedTransition(FSMError):
         self._transition = transition
 
     def __str__(self):
-        return "Error - There's already a transition from '{0}' to '{1}' with the same function.".format(self._transition.from_state.id, self._transition.to_state.id)
+        return "Error - There's already a transition from '{0}' to '{1}' with the same function.".format(
+            self._transition.from_state.id, self._transition.to_state.id
+        )
