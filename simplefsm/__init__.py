@@ -248,7 +248,7 @@ class SimpleFSM(object):
     def run(self):
         """
         Starts the FSM. Returns a list containing the accepted symbols
-        otherwise a FSMRejectedInput input is raised.
+        otherwise a FSMRejectedInput exception is raised.
         """
 
         self._set_states()
@@ -262,6 +262,6 @@ class SimpleFSM(object):
                 self._remaining_input = False
 
         if self.current_state not in self._final_states:
-            raise FSMRejectedInput(type='string')
+            raise FSMRejectedInput(self._accepted_symbols, type='string')
 
         return self._accepted_symbols
