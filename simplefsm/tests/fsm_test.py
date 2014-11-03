@@ -90,8 +90,14 @@ class TestDummyFSM(TestCase):
         
     @raises(FSMRejectedInput)
     def test_input_is_rejected(self):
-        # fsm_test_input = ['a', 'a', 'b', 'b', 'a', 'c', 'a', 'b']
         fsm_test_input = ['a', 'a', 'b', 'b', 'a', 'c', 'a']
+        self._fsm.reset()
+        self._fsm.set_symbols(fsm_test_input)
+        self._fsm.run()
+
+    @raises(FSMRejectedInput)
+    def test_input_is_rejected_because_not_in_final_state(self):
+        fsm_test_input = ['a', 'a', 'b', 'b', 'a']
         self._fsm.reset()
         self._fsm.set_symbols(fsm_test_input)
         self._fsm.run()
