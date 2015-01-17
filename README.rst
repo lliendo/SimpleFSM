@@ -137,5 +137,7 @@ Installation
 To install SimpleFSM, run:
 
 .. code-block:: bash
-
+    
+    $ git clone https://github.com/lliendo/SimpleFSM.git
+    $ cd SimpleFSM
     $ python setup.py install
