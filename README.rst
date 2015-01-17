@@ -95,7 +95,7 @@ create a FSM that accepts arbitrary binary numbers :
 
     def build_fsm():
         # States.
-        state_a = State('A', start_state=True)
+        state_a = State('A', start_state=True, final_state=True)
         state_b = State('B', final_state=True)
 
         # Transitions.
