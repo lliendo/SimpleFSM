@@ -242,6 +242,7 @@ class SimpleFSM(object):
 
     def _set_states(self):
         self._accepted_symbols = []
+        self._remaining_input = True
         self._set_initial_state()
         self._set_final_states()
 
