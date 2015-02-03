@@ -74,6 +74,7 @@ create a FSM that accepts arbitrary binary numbers :
 .. code-block:: python
 
     from simplefsm import State, SimpleFSM, Transition
+    from simplefsm.exceptions import FSMEndOfInput
     from random import randint
 
 
@@ -98,11 +99,14 @@ create a FSM that accepts arbitrary binary numbers :
         state_a = State('A', start_state=True, final_state=True)
         state_b = State('B', final_state=True)
 
+        is_zero = lambda s: str(s) == '0'
+        is_one = lambda s: str(s) == '1'
+
         # Transitions.
-        transition_a_self = Transition(state_a, state_a, lambda s: str(s) == '0')
-        transition_b_self = Transition(state_b, state_b, lambda s: str(s) == '1')
-        transition_a_b = Transition(state_a, state_b, lambda s: str(s) == '1')
-        transition_b_a = Transition(state_b, state_a, lambda s: str(s) == '0')
+        transition_a_self = Transition(state_a, state_a, is_zero)
+        transition_b_self = Transition(state_b, state_b, is_one)
+        transition_a_b = Transition(state_a, state_b, is_one)
+        transition_b_a = Transition(state_b, state_a, is_zero)
 
         # FSM.
         input_length = randint(1, 10)
