@@ -75,7 +75,7 @@ class State(object):
             transition = filter(lambda t: t.from_state.id == self.id \
                 and t.applies(symbol), fsm.transitions).pop()
         except IndexError:
-            raise FSMRejectedInput(symbol)
+            raise FSMRejectedInput([symbol])
 
         fsm.current_state = transition.to_state
         return symbol
