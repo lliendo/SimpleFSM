@@ -72,8 +72,7 @@ class State(object):
         symbol = fsm.read_symbol()
 
         try:
-            transition = filter(lambda t: t.from_state.id == self.id \
-                and t.applies(symbol), fsm.transitions).pop()
+            transition = [t for t in fsm.transitions if t.from_state.id == self.id and t.accepts(symbol)].pop()
         except IndexError:
             raise FSMRejectedInput([symbol])
 
@@ -115,10 +114,9 @@ class Transition(object):
         """Returns the transition function used by a Transition object."""
         return self._transition_function
 
-    def applies(self, symbol):
+    def accepts(self, symbol):
         """
-        Returns True if the read symbol is matched against the transition
-        function.
+        Returns True if the read symbol is accepted by the transition function.
         """
         return self._transition_function(symbol)
 
@@ -135,14 +133,14 @@ class SimpleFSM(object):
     the read_symbol() method. This method is responsible for returning a symbol
     each time is called. This symbol is then tested to check if it's actually
     accepted by the FSM.
-    
+
     Typically you would instantiate a set of States and Transitions. After
     this is done you instantiate your custom-implemented FSM and add all the
     states and transitions.
 
     After your custom-implemented FSM is built you should call the run()
     method. If the word is recognized a list with all the accepted symbols
-    is returned otherwise an FSMRejectedInput is raised.
+    is returned otherwise a FSMRejectedInput is raised.
     """
 
     __metaclass__ = ABCMeta
@@ -175,7 +173,7 @@ class SimpleFSM(object):
         """
         if state in self._states:
             raise FSMDuplicatedState(state)
-        
+
         self._states.append(state)
 
     def add_states(self, states):
@@ -192,7 +190,7 @@ class SimpleFSM(object):
         """
         if transition in self._transitions:
             raise FSMDuplicatedTransition(transition)
-        
+
         self._transitions.append(transition)
 
     def add_transitions(self, transitions):
@@ -212,8 +210,8 @@ class SimpleFSM(object):
     @abstractmethod
     def read_symbol(self):
         """
-        Abstract method that must be overwritten by the user. When there
-        is no more input to be provided an FSMEndOfInput should be raised
+        Abstract method that must be implemented by the user. When there
+        is no more input a FSMEndOfInput exception should be raised
         to notify the FSM that no more input is available.
         """
         raise FSMNotImplementedInput()
@@ -226,16 +224,18 @@ class SimpleFSM(object):
         pass
 
     def _set_initial_state(self):
-        if len(filter(lambda s: s.start_state, self._states)) > 1:
+        start_state = [s for s in self._states if s.start_state]
+
+        if len(start_state) > 1:
             raise FSMStartStatesError()
 
         try:
-            self._current_state = filter(lambda s: s.start_state, self._states).pop()
+            self._current_state = start_state.pop()
         except IndexError:
             raise FSMNoStartStateError()
 
     def _set_final_states(self):
-        self._final_states = filter(lambda s: s.final_state, self._states)
+        self._final_states = [s for s in self._states if s.final_state]
 
         if not self._final_states:
             raise FSMFinalStateError()
