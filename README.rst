@@ -1,17 +1,16 @@
-Introduction
-============
+SimpleFSM
+=========
 
-SimpleFSM is an extremely easy-to-use Python module to model
-Finite State Machines in an object-oriented way. The module 
-itself consists in just three simple classes :
+SimpleFSM is an easy-to-use Python module to model Finite State Machines.
+The module itself consists in just three classes :
 
 - State
 - Transition
 - SimpleFSM
 
-Initially you would create states and transitions and after that 
-you would implement your custom FSM by inheriting from the SimpleFSM 
-class and overriding the read_symbol() method.
+Initially you create states and transitions and after that 
+you create your custom FSM by inheriting from the SimpleFSM 
+class and implementing the read_symbol() method.
 
 Two other methods may (optionally) be implemented and its purpose
 is to do pre-processing and post-processing provided that you need
@@ -50,13 +49,13 @@ Transition class
 ----------------
 
 The Transition class models a transition between two states.
-To create a transition you would write :
+To create a transition you should write :
 
 .. code-block:: python
 
     state_a = State('A', start_state=True, final_state=True)
     state_b = State('B', final_state=True)
-    transition_a_b = Transition(state_a, state_b, lambda x: str(x) == '0')
+    transition_a_b = Transition(state_a, state_b, lambda x: x == 0)
 
 The above code builds a transition between state A and state B
 and the transition will take place only if the processed symbol
@@ -69,7 +68,7 @@ SimpleFSM class
 This class is the core of the simplefsm module. Once you have
 built all your states, transitions and the custom FSM you are
 ready to go. The following is a full example that shows how to
-create a FSM that accepts arbitrary binary numbers :
+create a FSM that accepts arbitrary (maximum 10 bits) binary numbers :
 
 .. code-block:: python
 
@@ -99,8 +98,8 @@ create a FSM that accepts arbitrary binary numbers :
         state_a = State('A', start_state=True, final_state=True)
         state_b = State('B', final_state=True)
 
-        is_zero = lambda s: str(s) == '0'
-        is_one = lambda s: str(s) == '1'
+        is_zero = lambda i: i == 0
+        is_one = lambda i: i == 1
 
         # Transitions.
         transition_a_self = Transition(state_a, state_a, is_zero)
@@ -110,7 +109,7 @@ create a FSM that accepts arbitrary binary numbers :
 
         # FSM.
         input_length = randint(1, 10)
-        fsm = BinaryFSM([str(randint(0, 1)) for i in range(0, input_length)])
+        fsm = BinaryFSM([randint(0, 1) for i in range(0, input_length)])
         fsm.add_states([state_a, state_b])
         fsm.add_transitions([transition_a_self, transition_b_self, transition_a_b, transition_b_a])
 
@@ -118,8 +117,8 @@ create a FSM that accepts arbitrary binary numbers :
 
     def main():
         fsm = build_fsm()
-        accepted_word = fsm.run()
-        print("Accepted word : {0}".format("".join(accepted_word)))
+        accepted_word = [str(i) for i in fsm.run()]
+        print 'Accepted word : {0}'.format(''.join(accepted_word))
 
     if __name__ == '__main__':
         main()
@@ -134,14 +133,42 @@ method and no more input is available you must raise the
 FSMEndOfInput exception to notify SimpleFSM that you've reached
 the end of the input that you're evaluating.
 
+As mentioned previously there are two methods available to execute
+code before and/or after a transition takes place. If you need
+to do this then you must implement any of these abstract methods
+in your FSM class :
+
+.. code-block:: python
+
+    class YourFSM(SimpleFSM):
+
+        def pre_transit(self, *args, *kwargs):
+            ...
+
+        def post_transit(self, *args, *kwargs):
+            ...
+
 
 Installation
 ------------
 
-To install SimpleFSM, run:
+Clone this repository to a temporary directory using `GIT <https://git-scm.com/>`_ (or alternatively download
+as `.zip <https://github.com/lliendo/SimpleFSM/archive/master.zip>`_), and run  :
 
 .. code-block:: bash
     
-    $ git clone https://github.com/lliendo/SimpleFSM.git
-    $ cd SimpleFSM
-    $ python setup.py install
+    git clone https://github.com/lliendo/SimpleFSM.git
+    cd SimpleFSM
+    python setup.py install
+
+
+License
+-------
+
+SimpleFSM is distributed under the `GNU LGPLv3 <https://www.gnu.org/licenses/lgpl.txt>`_ license.
+
+
+Authors
+-------
+
+* Lucas Liendo.
