@@ -21,8 +21,8 @@ Copyright 2014 Lucas Liendo.
 
 from nose.tools import assert_equal, raises
 from unittest import TestCase
-from .. import State, Transition, SimpleFSM
-from ..exceptions import (
+from simplefsm import State, Transition, SimpleFSM
+from simplefsm.exceptions import (
     FSMStartStatesError, FSMNoStartStateError, FSMFinalStateError,
     FSMRejectedInput, FSMDuplicatedState, FSMDuplicatedTransition,
     FSMEndOfInput
