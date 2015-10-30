@@ -1,3 +1,13 @@
+.. image:: https://codeclimate.com/github/lliendo/SimpleFSM/badges/gpa.svg
+   :target: https://codeclimate.com/github/lliendo/SimpleFSM
+   :alt: Code Climate
+
+
+.. image:: https://api.travis-ci.org/lliendo/SimpleFSM.svg?branch=master
+    :target: https://travis-ci.org/lliendo/SimpleFSM
+    :alt: Travis CI
+
+
 SimpleFSM
 =========
 
@@ -102,23 +112,27 @@ create a FSM that accepts arbitrary (maximum 10 bits) binary numbers :
         is_one = lambda i: i == 1
 
         # Transitions.
-        transition_a_self = Transition(state_a, state_a, is_zero)
-        transition_b_self = Transition(state_b, state_b, is_one)
-        transition_a_b = Transition(state_a, state_b, is_one)
-        transition_b_a = Transition(state_b, state_a, is_zero)
+        transitions = [
+            Transition(state_a, state_a, is_zero),
+            Transition(state_b, state_b, is_one),
+            Transition(state_a, state_b, is_one),
+            Transition(state_b, state_a, is_zero),
+        ]
 
         # FSM.
         input_length = randint(1, 10)
         fsm = BinaryFSM([randint(0, 1) for i in range(0, input_length)])
         fsm.add_states([state_a, state_b])
-        fsm.add_transitions([transition_a_self, transition_b_self, transition_a_b, transition_b_a])
+        fsm.add_transitions(transitions)
 
         return fsm
+
 
     def main():
         fsm = build_fsm()
         accepted_word = [str(i) for i in fsm.run()]
-        print 'Accepted word : {0}'.format(''.join(accepted_word))
+        print 'Accepted word : {:}.'.format(''.join(accepted_word))
+
 
     if __name__ == '__main__':
         main()
