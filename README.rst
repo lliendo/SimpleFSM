@@ -156,10 +156,10 @@ in your FSM class :
 
     class YourFSM(SimpleFSM):
 
-        def pre_transit(self, *args, *kwargs):
+        def pre_transit(self, *args, **kwargs):
             ...
 
-        def post_transit(self, *args, *kwargs):
+        def post_transit(self, *args, **kwargs):
             ...
 
 
